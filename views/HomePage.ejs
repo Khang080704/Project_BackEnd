@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+   
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        @keyframes appear{
+            from {
+                opacity: 0;
+                scale: 0.5;
+            }
+            to{
+                opacity: 1;
+                scale: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="contact_box">                     
+        <div class="menu" >
+            <nav>
+                <a href= "#home"><b>Home page</b></a>
+                <a href="#benefit"><b>Features </b></a>
+                <a href="#other"> <b>Ho tro</b></a>
+            </nav>
+        </div>  
+    </div>
+
+    <div class="poster" id="home">
+        <div class="content_post">
+            <h1>Phần mềm quản lý sổ tiết kiệm </h1>
+            <p>Quản lý tài chính cá nhân không dễ dàng, nhưng đội ngũ của chúng tôi luôn cố gắng giúp nó trở nên đơn giản hơn trong suốt chặng đường 10 năm qua! </p>
+            <h4>Tham gia ngay với +2,5 triệu người dùng khác</h4>            
+        </div>
+        <div class="image">
+            <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-banner-vn.png">
+        </div>
+    </div> 
+
+    <h1 id = "benefit" style="text-align: center;">Tính năng</h1>
+    <h3  style="color: gray; text-align: center;">Việc quản lý tài chính trở nên tiện lợi với những tính năng đa dạng của chúng tôi</h3>
+
+    <div class="features">
+        <div class="mo_so_tiet_kiem">
+            <a href="moso">
+            <h2>Mở sổ tiết kiệm<span><img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-left-4-active.svg"></span></h2>   
+            </a>
+        </div>
+        <div class="tra_cuu_so">
+            <a href="tracuuso.html">
+            <h2>Tra cứu sổ
+                <span>
+                    <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-right-2-active.svg" alt="">
+                </span>
+            </h2>
+            </a>
+        </div>
+
+        <div class="lap_bao_cao">
+            <a href="chonbaocao.html">
+            <h2>
+                Lập báo cáo tháng
+                <span>
+                    <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-left-1-active.svg" alt="">
+                </span>
+            </h2>
+            </a>
+        </div>
+
+        <div class="lap_phieu_rut">
+            <a href="ruttien">
+                <h2>Lập phiếu rút tiền
+                    <span>
+                        <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-right-3-active.svg" alt="">
+                    </span>
+                </h2>
+            </a>
+            
+        </div>
+        <div class="lap_phieu_goi">
+            <a href="guitien">
+            <h2>
+                Lập phiếu gởi tiền
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-left-2-active.svg" alt="">
+            </h2>
+            </a>
+        </div>
+        <div class="thay_doi_quy_dinh">
+            <a href="thaydoiquidinh.html">
+            <h2>
+                Thay đổi quy định
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-right-4-active.svg" alt="">
+            </h2>
+            </a>
+        </div>
+    </div>
+    
+    <div class="reason_to_choose" style="height: 200px; background-color: darkblue;">
+        <h2>
+            Vì sao bạn nên chọn sử dụng ứng dụng của chúng tôi?
+        </h2>
+    </div>
+
+    <div class="question" id="other">
+        <div class="test">
+            <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-banner-question-vi.png" alt="">
+        </div>
+        <div class="infor">
+            <h1>Contact us</h1>
+            <p>Bạn có câu hỏi cần giải đáp. Liên hệ và tham gia <br>ngay cộng đồng của chúng tôi </p>
+            <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/F.A.Q.png" alt="" width="50%" height="50%">
+        </div>       
+    </div>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">&uarr;</button>
+    
+</body>
+<script>
+    let mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+        } else {
+            mybutton.style.display = "none";
+        }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    }
+</script>
+</html>

@@ -1,0 +1,85 @@
+body{
+    /* mo file chua anh lam background */
+    background:url(../image/doi.jpg);
+    background-size: cover; /*bgr trai dai*/
+    background-position-y: -80px;
+
+}
+#wrapper{
+    /* do cao toi thieu la do cao cua man hinh */
+    min-height: 100vh; 
+    /* canh chinh phan tu ra giua */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#form-login{
+    max-width: 400px;
+    background: rgba(34, 114, 167, 0.8);
+    flex-grow: 1;
+    /* cho phan quan trong nam giua wrapper */
+    padding: 30px 30px 40px;
+    box-shadow: 0px 0px 17px 2px rgba(255, 255, 255, 0.8);
+
+}
+/* chinh sua noi dung Form dang nhap */
+.form-heading{
+    font-size: 25px;
+    color: #f5f5f5;
+    text-align: center;
+    margin-bottom: 30px;
+
+}
+.form-group{
+    border-bottom: 1px solid #f3e9e9;
+    margin-top: 15x;
+    margin-bottom: 30px;
+    display: flex; /* them icon*/
+}
+/* dieu chinh gr ki hieu */
+.form-group i{
+    color: #f4f4f4;
+    font-size: 14px;
+    padding-top: 10px;
+    /* cach ten dang nhap */
+    padding-right: 10px; 
+    margin-bottom: 10px;
+}
+.form-input{
+    background: transparent; /*mau trong xuot*/
+    border: 0;
+    outline: 0;
+    color: #ffffff;
+    flex-grow: 1;
+}
+/* hien thi phaan chi dan ben trong */
+.form-input::placeholder{
+    color: #e9d6d6;
+}
+
+/* chinh sua nut submit */
+.form-submit{
+    background: transparent;
+    border: 1px solid #f5f5f5;
+    color: #fff;
+    width: 100%;
+    text-transform: uppercase; /*in hoa*/
+    padding: 6px 10px;
+    transition: 0.25s ease-in-out;
+    margin-top: 30px;
+
+}
+.form-submit:hover{
+    border: 1px solid #54a0ff ;
+}
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #435febc8;
+    margin-top: 30px;
+  }
+  span.psw {
+    float: right;
+    padding-top: 16px;
+    margin-top: 30px;
+  }

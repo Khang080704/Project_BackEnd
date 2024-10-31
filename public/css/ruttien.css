@@ -1,0 +1,94 @@
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;  /* Căn giữa theo chiều ngang */
+    align-items: center;      /* Căn giữa theo chiều dọc */
+    background-color: #58adf8; /* Màu nền cho trang */
+}
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 30px;
+}
+.saving-account-form {
+    width: 650px; /* Đặt chiều rộng lớn hơn cho khung form */
+    margin: 50px auto; 
+    padding: 30px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+   
+    display: grid;
+    grid-template-columns: 100px 1fr 100px 1fr; 
+    column-gap: 20px; /* Khoảng cách giữa các cột */
+    row-gap: 20px; /* Khoảng cách giữa các hàng */
+    align-items: center;
+}
+.row input, .row select {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 200px; /*Chiều rộng cho input */
+     box-sizing: border-box; 
+    
+}
+/* Định dạng label để căn thẳng hàng với input */
+.row label {
+    width: 150px; 
+    font-weight: bold;
+    
+}
+
+button {
+    width: 100px;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"] {
+    background-color: #28a745; /* Màu xanh cho nút "Mở sổ" */
+}
+
+button#cancelBtn {
+    background-color: #dc3545; /* Màu đỏ cho nút "Hủy" */
+}
+
+.button-row {
+     /* Đặt khoảng cách giữa các nút */
+     display: flex;
+    justify-content: center; /* Căn giữa hai nút */
+    gap: 20px; /* Khoảng cách giữa hai nút */
+    margin-top: 20px;
+
+}
+
+
+/* Thanh màu xanh đầu trang */
+.top-bar {
+    width: 100%; /* Chiều rộng 100% màn hình */
+    background-color: #007bff; /* Màu xanh */
+    padding: 5px 0; /* Khoảng cách trong thanh */
+    text-align: center; /* Căn giữa nội dung */
+    position: fixed; /* Đặt thanh ở vị trí cố định trên đầu */
+    top: 0;
+    left: 0;
+    z-index: 100; /* Đảm bảo thanh ở phía trên các thành phần khác */
+    color: white; /* Màu chữ */
+    font-size: 18px; /* Kích thước chữ */
+}
+
+/* Căn chỉnh phần nội dung xuống dưới để không bị che bởi thanh */
+.saving-account-form {
+    margin-top: 80px; /* Khoảng cách từ đầu trang tới nội dung chính */
+}

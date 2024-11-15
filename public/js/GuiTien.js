@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 // Định dạng số tiền nhap do co với dấu chấm
 function formatCurrency(input) {
     let value = input.replace(/\D/g, ''); // Loại số
@@ -39,10 +41,35 @@ document.getElementById('amount').addEventListener('input', function(e) {
         event.preventDefault(); 
         alert('Số tiền gửi không hợp lệ. Vui lòng nhập số tiền lớn hơn 100.000 đ.');
     } else {
-        // Nếu hợp lệ show popup
-        event.preventDefault(); 
-        document.getElementById('popup').classList.add('show');
-        document.getElementById('overlay').classList.add('show');
+        let form = event.target;
+        let formData = new FormData(form);
+        let queryString = new URLSearchParams(formData).toString()
+        let urlToSend = "./moso?" + queryString;
+        fetch('/guitien',{
+            method : 'post',
+            headers :{
+                'Content-Type': 'application/json' 
+            },
+            body : JSON.stringify({
+                url : urlToSend
+            })
+        }).then(response => {
+            const info = response.json();
+            if(info.status == true){
+                // Nếu hợp lệ show popup
+                event.preventDefault(); 
+                document.getElementById('popup').classList.add('show');
+                document.getElementById('overlay').classList.add('show');
+            }
+            else{
+                alert("Thong tin nhap vao khong chinh xac")
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
+        
+        
     }
 });
 // nhấn dô ok thì trở về home

@@ -1,143 +1,203 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home page</title>
+    <title>Trang chủ, Quản lí sổ tiết kiệm</title>
    
-    <link rel="stylesheet" href="css/header.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
-        @keyframes appear{
+        .fixed-navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 30; /* Đảm bảo nó luôn hiển thị trên các phần tử khác */
+            text-decoration: none;
+        }
+        @keyframes appear {
             from {
                 opacity: 0;
-                scale: 0.5;
+                transform: scale(0.5);
             }
-            to{
+            to {
                 opacity: 1;
-                scale: 1;
+                transform: scale(1);
             }
+        }
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            background-color: #3490dc;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 100;
+        }
+        #myBtn:hover {
+            background-color: #2779bd;
         }
     </style>
 </head>
-<body>
-    
-    <div class="contact_box">                     
-        <div class="menu" >
-            <nav>
-                <a href= "#home"><b>Home page</b></a>
-                <a href="#benefit"><b>Features </b></a>
-                <a href="#other"> <b>Ho tro</b></a>
-            </nav>
-        </div>  
-    </div>
+<body class="bg-gray-100 text-gray-800">
 
-    <div class="poster" id="home">
-        <div class="content_post">
-            <h1>Phần mềm quản lý sổ tiết kiệm </h1>
-            <p>Quản lý tài chính cá nhân không dễ dàng, nhưng đội ngũ của chúng tôi luôn cố gắng giúp nó trở nên đơn giản hơn trong suốt chặng đường 10 năm qua! </p>
-            <h4>Tham gia ngay với +2,5 triệu người dùng khác</h4>            
+    <!-- Header -->
+    <nav class="fixed-navbar bg-blue-500 text-white py-4">
+        <div class="container mx-auto flex justify-right space-x-8 text-lg">
+            <a href="#home" class="hover:text-yellow-300 font-semibold">Trang chủ</a>
+            <a href="#benefit" class="hover:text-yellow-300 font-semibold">Tính năng</a>
+            <a href="#support" class="hover:text-yellow-300 font-semibold">Hỗ Trợ</a>
+            <a href="#other" class="hover:text-yellow-300 font-semibold">Tiện ích khác</a>
         </div>
-        <div class="image">
-            <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-banner-vn.png">
+    </nav>
+
+    <!-- Banner Section -->
+    <section class="bg-white py-16" id="home">
+        <div class="container mx-auto flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-12 px-4">
+            <div class="lg:w-1/2 animate-appear">
+                <h1 class="text-4xl font-bold text-blue-700">Phần mềm quản lý sổ tiết kiệm</h1>
+                <p class="mt-4 text-gray-600">Quản lý tài chính cá nhân không dễ dàng, nhưng đội ngũ của chúng tôi luôn cố gắng giúp nó trở nên đơn giản hơn trong suốt chặng đường 10 năm qua!</p>
+                <h4 class="mt-6 text-lg font-semibold text-blue-600">Tham gia ngay với +2,5 triệu người dùng khác</h4>
+            </div>
+            <div class="lg:w-1/2">
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-banner-vn.png" alt="Banner Image">
+            </div>
         </div>
-    </div> 
+    </section>
 
-    <h1 id = "benefit" style="text-align: center;">Tính năng</h1>
-    <h3  style="color: gray; text-align: center;">Việc quản lý tài chính trở nên tiện lợi với những tính năng đa dạng của chúng tôi</h3>
-
-    <div class="features">
-        <div class="mo_so_tiet_kiem">
-            <a href="moso">
-            <h2>Mở sổ tiết kiệm<span><img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-left-4-active.svg"></span></h2>   
+    <!-- Features Section -->
+    <section class="py-16 bg-gray-100" id="benefit">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-bold text-blue-700">Tính năng</h2>
+            <p class="text-gray-500 mt-2">Việc quản lý tài chính trở nên tiện lợi với những tính năng đa dạng của chúng tôi</p>
+        </div>
+        <div class="container mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3 px-4">
+            <!-- Feature Item -->
+            <a href="moso" class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+                <h2 class="text-xl font-bold mb-4">Mở sổ tiết kiệm</h2>
+                <div class="flex items-center">
+                    <div class="bg-gradient-to-r from-purple-500 to-blue-500 p-2 rounded-full">
+                        <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-left-4-active.svg" alt="" class="w-12">
+                    </div>
+                    <div class="ml-4">
+                        <p style="font-size: 15px;">Mở sổ dễ dàng, nhanh chóng, quản lí tài chính của bạn ở mọi nơi</p>
+                    </div>
+                    
+                    
+                </div>
+                
+            </a>
+            <a href="tracuuso.html" class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+                <h2 class="text-xl font-bold mb-4">Tra cứu sổ</h2> 
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-right-2-active.svg" alt="" class="w-12">
+            </a>
+            <a href="chonbaocao.html" class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+                <h2 class="text-xl font-bold mb-4">Lập báo cáo tháng</h2> 
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-left-1-active.svg" alt="" class="w-12">
+            </a>
+            <a href="ruttien" class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+                <h2 class="text-xl font-bold mb-4">Lập phiếu rút tiền</h2>
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-right-3-active.svg" alt="" class="w-12">
+            </a>
+            <a href="guitien" class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+                <h2 class="text-xl font-bold mb-4">Lập phiếu gởi tiền</h2> 
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-left-2-active.svg" alt="" class="w-12">
+            </a>
+            <a href="thaydoiquidinh.html" class="bg-white p-6 rounded-lg shadow-lg transform hover:scale-105 transition duration-300">
+                <h2 class="text-xl font-bold mb-4">Thay đổi quy định</h2>
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-right-4-active.svg" alt="" class="w-12">
             </a>
         </div>
-        <div class="tra_cuu_so">
-            <a href="tracuuso.html">
-            <h2>Tra cứu sổ
-                <span>
-                    <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-right-2-active.svg" alt="">
-                </span>
-            </h2>
-            </a>
-        </div>
+    </section>
 
-        <div class="lap_bao_cao">
-            <a href="chonbaocao.html">
-            <h2>
-                Lập báo cáo tháng
-                <span>
-                    <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-left-1-active.svg" alt="">
-                </span>
-            </h2>
-            </a>
+    <!-- Reason to Choose Section -->
+    <section class="py-16 bg-blue-600 text-white">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold">Vì sao bạn nên chọn sử dụng ứng dụng của chúng tôi?</h2>
+            <p class="mt-4 text-lg">Ứng dụng được phát triển với tính năng linh hoạt, tiện lợi và dễ dàng sử dụng cho mọi đối tượng người dùng.</p>
         </div>
+    </section>
 
-        <div class="lap_phieu_rut">
-            <a href="ruttien">
-                <h2>Lập phiếu rút tiền
-                    <span>
-                        <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-right-3-active.svg" alt="">
-                    </span>
-                </h2>
-            </a>
-            
+    <!-- Contact Section -->
+    <section class="py-16 bg-gray-50" id="support">
+        <div class="container mx-auto flex flex-col lg:flex-row items-center space-y-8 lg:space-y-0 lg:space-x-12 px-4">
+            <div class="lg:w-1/2">
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-banner-question-vi.png" alt="Contact Image">
+            </div>
+            <div class="lg:w-1/2 text-center lg:text-left">
+                <h1 class="text-3xl font-bold text-blue-700">Contact us</h1>
+                <p class="mt-4 text-gray-600">Bạn có câu hỏi cần giải đáp? Liên hệ và tham gia ngay cộng đồng của chúng tôi để nhận được hỗ trợ tận tình.</p>
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/F.A.Q.png" alt="" class="mt-6 w-1/2 mx-auto lg:mx-0">
+            </div>       
         </div>
-        <div class="lap_phieu_goi">
-            <a href="guitien">
-            <h2>
-                Lập phiếu gởi tiền
-                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-left-2-active.svg" alt="">
-            </h2>
-            </a>
-        </div>
-        <div class="thay_doi_quy_dinh">
-            <a href="thaydoiquidinh.html">
-            <h2>
-                Thay đổi quy định
-                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-right-4-active.svg" alt="">
-            </h2>
-            </a>
-        </div>
-    </div>
-    
-    <div class="reason_to_choose" style="height: 200px; background-color: darkblue;">
-        <h2>
-            Vì sao bạn nên chọn sử dụng ứng dụng của chúng tôi?
-        </h2>
-    </div>
+    </section>
 
-    <div class="question" id="other">
-        <div class="test">
-            <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-banner-question-vi.png" alt="">
+    <footer class="bg-gray-100 py-10" id="other">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 text-gray-700">
+            <!-- Logo và Thông tin công ty -->
+            <div class="flex flex-col items-center md:items-start">
+                <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/img-banner-vn.png" alt="MISA Logo" class="h-12 mb-4">
+                <h3 class="font-bold">Nhom 10</h3>
+                <p class="text-sm text-center md:text-left">Trụ sở chính:<br>Trường đại học Khoa học Tự nhiên, ĐHQG -HCM, Linh Trung, Thủ Đức</p>
+            </div>
+
+            <!-- Khám phá -->
+            <div class="text-center md:text-left">
+                <h4 class="font-semibold mb-2">Khám phá</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:underline">Về chúng tôi</a></li>
+                    <li><a href="#" class="hover:underline">Sản phẩm</a></li>
+                    <li><a href="#" class="hover:underline">Giải pháp</a></li>
+                </ul>
+            </div>
+
+            <!-- Tài nguyên -->
+            <div class="text-center md:text-left">
+                <h4 class="font-semibold mb-2">Tài nguyên</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:underline">Tài liệu - eBooks</a></li>
+                    <li><a href="#" class="hover:underline">Hỗ trợ</a></li>
+                    <li><a href="#" class="hover:underline">Cộng đồng</a></li>
+                </ul>
+            </div>
+
+            <!-- Blogs -->
+            <div class="text-center md:text-left">
+                <h4 class="font-semibold mb-2">Blogs</h4>
+                <ul class="space-y-2">
+                    <li><a href="#" class="hover:underline">Tài chính - Kế toán</a></li>
+                    <li><a href="#" class="hover:underline">Doanh nghiệp</a></li>
+                    <li><a href="#" class="hover:underline">Thương mại</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="infor">
-            <h1>Contact us</h1>
-            <p>Bạn có câu hỏi cần giải đáp. Liên hệ và tham gia <br>ngay cộng đồng của chúng tôi </p>
-            <img src="https://sothuchi.misa.vn/sites/sothuchi/images/home-v2/F.A.Q.png" alt="" width="50%" height="50%">
-        </div>       
-    </div>
+    </footer>
+
+    <!-- Back to Top Button -->
     <button onclick="topFunction()" id="myBtn" title="Go to top">&uarr;</button>
     
-</body>
-<script>
-    let mybutton = document.getElementById("myBtn");
-
-    // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-        } else {
-            mybutton.style.display = "none";
+    <!-- JavaScript for Back to Top Button -->
+    <script>
+        let mybutton = document.getElementById("myBtn");
+        
+        window.onscroll = function() {scrollFunction()};
+        
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
         }
-    }
 
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-        document.body.scrollTop = 0; // For Safari
-        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-    }
-</script>
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+</body>
 </html>

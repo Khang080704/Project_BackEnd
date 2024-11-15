@@ -1,4 +1,4 @@
-
+const {accounts} = require('../Model/savingModel')
 function getInforFromURL(url){
     var queryStart = url.indexOf("?") + 1,
         queryEnd   = url.indexOf("#") + 1 || url.length + 1,
@@ -19,5 +19,12 @@ function getInforFromURL(url){
     return parms;
 
 }
+function addAccount(account) {
+    accounts.push(account);
+    console.log(accounts);
+}
 
-module.exports = getInforFromURL;
+module.exports = {
+    getInforFromURL,
+    addAccount
+}

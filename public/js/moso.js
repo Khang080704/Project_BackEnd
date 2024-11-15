@@ -42,21 +42,23 @@ document.getElementById('savingForm').addEventListener('submit', function(event)
         let form = event.target;
         let formData = new FormData(form);
         let queryString = new URLSearchParams(formData).toString()
+        let formDataObject = {};
         
         event.preventDefault(); // Ngăn trình duyệt nạp lại trang
         document.getElementById('popup').classList.add('show');
         document.getElementById('overlay').classList.add('show');
+        formData.forEach((value, key) => { 
+            formDataObject[key] = value
+        });
 
         let urlToSend = "./moso?" + queryString;
-        console.log(urlToSend)
-        fetch('/moso',{
+
+        fetch('/moso',{ 
             method : 'post',
             headers : {
                 'Content-Type': 'application/json' 
             },
-            body : JSON.stringify({
-                url : urlToSend
-            })
+            body : JSON.stringify( formDataObject)
         })
         .then(respone => respone.json())
         .then(data => {

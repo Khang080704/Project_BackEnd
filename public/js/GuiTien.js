@@ -1,4 +1,3 @@
-const { response } = require("express");
 
 // Định dạng số tiền nhap do co với dấu chấm
 function formatCurrency(input) {

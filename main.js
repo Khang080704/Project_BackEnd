@@ -31,7 +31,7 @@ app.get('/guitien',SendingController.ShowSendingMoneyPage);
 //post api
 app.post('/search', SearchController.searchAccount)
 app.post('/moso', SavingController.AddAccountWithURL)
-app.post('/guitien', SendingController.receivedURL)
+//app.post('/guitien', SendingController.receivedURL)
 
 
 

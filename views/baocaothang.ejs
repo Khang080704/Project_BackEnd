@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo mở/đóng sổ tháng</title>
+    <link rel="stylesheet" href="./css/baocaothang.css">
+     <style>
+        /* Popup  */
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        /* Hiển thị popup */
+        .popup.show {
+            display: block;
+        }
+
+        /* Overlay (lớp nền mờ) */
+        .overlay {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* Nút đóng popup */
+        .popup button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: lightblue;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style> 
+</head>
+<body>
+    <header class="top-bar">
+        <h1>Quản lý Sổ Tiết Kiệm</h1>
+    </header>
+    <section class="saving-account-form">
+   
+        <form id="savingForm">               
+           <h2>BÁO CÁO MỞ/ĐÓNG SỔ THÁNG</h2>
+        <div class="row">
+            <div class="field">
+                <label for="savingType">Loại tiết kiệm:</label>
+                
+                <select id="loaiTietKiem">
+                    <option value="3_thang">3 tháng</option>
+                    <option value="6_thang">6 tháng</option>
+                    <option value="vo_thoi_han">Vô thời hạn</option>
+                </select>
+            </div>    
+                <div class="field">
+                    <label for="month">Tháng:</label>
+                    <select id="month" name="month">
+                        <option value="1">Tháng 1</option>
+                        <option value="2">Tháng 2</option>
+                        <option value="3">Tháng 3</option>
+                        <option value="4">Tháng 4</option>
+                        <option value="5">Tháng 5</option>
+                        <option value="6">Tháng 6</option>
+                        <option value="7">Tháng 7</option>
+                        <option value="8">Tháng 8</option>
+                        <option value="9">Tháng 9</option>
+                        <option value="10">Tháng 10</option>
+                        <option value="11">Tháng 11</option>
+                        <option value="12">Tháng 12</option>
+                    </select>
+                </div>
+            
+            </div>
+
+
+            <style>
+                table, th, td {
+                  border:1px solid black;
+                }
+                </style>
+                <body>
+                <table style="width:100%" id="monthlyTable">
+                  <tr>
+                    <th>STT</th>
+                    <th>NGÀY</th>
+                    <th>SỔ MỞ</th>
+                    <th>SỔ ĐÓNG</th>
+                    <th>CHÊNH LỆCH</th>
+                  </tr>
+                </table>
+                <p id="notfind"></p>
+                                
+                </body>
+            <div class="button-row">
+                <button type="button" id="backBtn">Quay lại</button>
+                <button type="submit" id="mothlyReport">Xem báo cáo</button>
+            </div>
+            
+
+        </form>
+    </section>
+    
+    <script>
+
+        // Nút đóng popup
+        document.getElementById('backBtn').addEventListener('click', function() {
+            //chuyen ve trang home
+            window.location.href = "baocao";
+        });
+
+        document.getElementById("savingForm").addEventListener('submit',(event) =>{
+            event.preventDefault();
+            var daySelected  = document.getElementById("month").value
+            var savingType = document.getElementById("loaiTietKiem").value
+
+            fetch('/baocaothang',{
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    type: savingType,
+                    date: daySelected
+                })
+            })
+            .then(Response => {
+                return Response.json();
+            })
+            .then(data => {
+                console.log(data);
+                showReport(data);
+            })
+            .catch((err) => console.log(err))
+
+        })
+       
+        function showReport(data){
+            const table = document.getElementById('monthlyTable');
+            document.getElementById("notfind").innerHTML = ''
+            table.innerHTML = ''
+            if (data.length > 0) {
+                table.innerHTML = `
+                    <tr>
+                        <th>STT</th>
+                        <th>NGÀY</th>
+                        <th>SỔ MỞ</th>
+                        <th>SỔ ĐÓNG</th>
+                        <th>CHÊNH LỆCH</th>
+                    </tr>
+                `;
+                var i = 1
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${i}</td>
+                        <td>${item.day}</td>
+                        <td>${item.SoMo}</td>
+                        <td>${item.SoDong}</td>
+                        <td>${item.ChenhLech}</td>
+                    `;
+                    table.appendChild(row);
+                    i++
+                });
+                table.appendChild(table);
+            } else {
+                document.getElementById("notfind").innerHTML = 'Không tìm thấy sổ nào.';
+            }
+        }
+    </script>
+</body>
+</html>

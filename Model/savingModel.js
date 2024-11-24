@@ -31,16 +31,8 @@ var accounts = [
 
 
 
-function findByID(data, object){
-    for(let i = 0; i < object.length;i++){
-        if(data["id"] == object[i]["id"]){
-            return object[i];
-        }
-    }
 
-}
 
 module.exports = {
     accounts,
-    findByID
 }

@@ -10,8 +10,9 @@ const config = {
         },
         options: {
             port: 1433, // Số cổng của SQL Server
-            encrypt: true, // Bật mã hóa SSL
-            trustServerCertificate: true // Bỏ qua xác thực chứng chỉ
-          },
+            encrypt: false, // Bật mã hóa SSL
+            trustServerCertificate: true, // Bỏ qua xác thực chứng chỉ
+            database: 'QLSTK'
+        },
 }
 module.exports = config;

@@ -60,9 +60,11 @@ document.getElementById('savingForm').addEventListener('submit', function(event)
             },
             body : JSON.stringify( formDataObject)
         })
-        .then(respone => respone.json())
+        .then((respone) => {
+            console.log(respone)
+        })
         .then(data => {
-            console.log(data)
+            console.log(data) 
         })    
         .catch(error => {
             console.log(error)

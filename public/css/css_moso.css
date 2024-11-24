@@ -65,11 +65,11 @@ button#cancelBtn {
 
 .button-row {
      /* Đặt khoảng cách giữa các nút */
-     display: flex;
+    display: flex;
     justify-content: center; /* Căn giữa hai nút */
     gap: 20px; /* Khoảng cách giữa hai nút */
     margin-top: 20px;
-
+    color: white;
 }
 
 

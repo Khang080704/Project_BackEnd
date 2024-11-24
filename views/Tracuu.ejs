@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tra cứu sổ</title>
+    <link rel="stylesheet" href="./css/tracuuso.css">
+     <style>
+        /* Popup  */
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        /* Hiển thị popup */
+        .popup.show {
+            display: block;
+        }
+
+        /* Overlay (lớp nền mờ) */
+        .overlay {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* Nút đóng popup */
+        .popup button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: lightblue;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style> 
+</head>
+<body>
+    <header class="top-bar">
+        <h1>Quản lý Sổ Tiết Kiệm</h1>
+    </header>
+    <section class="saving-account-form">
+   
+        <form id="savingForm">
+            <style>
+                table, th, td {
+                  border:1px solid black;
+                }
+                </style>
+                <body>
+                  <h2>Danh sách sổ tiết kiệm</h2>
+
+                  <div class="row">
+
+                     <div class="button-row">
+                        <button type="submit">Tìm kiếm</button>
+                     </div>
+
+                    <input type="text" id="amount" name="amount" required placeholder="Nhập mã sổ">
+                    <div id="error-message" style="color:red; font-size: 12px;"></div>
+                </div>
+                  
+                <table style="width:100%">
+                  <tr>
+                    <th>STT</th>
+                    <th>MÃ SỐ</th>
+                    <th>LOẠI TIẾT KIỆM</th>
+                    <th>KHÁCH HÀNG</th>
+                    <th>SỐ DƯ</th>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td id="MaSo"></td>
+                    <td id="LoaiTietKiem"></td>
+                    <td id="khachhang"></td>
+                    <td id="sodu"></td>
+                  </tr>
+                </table>
+                <p id="notfind"></p>
+                                
+                </body>
+            <div class="button-row">
+                <button type="button" id="backBtn">Quay lại</button>
+            </div>
+            
+        </form>
+    </section>
+
+   
+<script>
+
+    // Nút đóng popup
+    document.getElementById('backBtn').addEventListener('click', function() {
+        //chuyen ve trang home
+        window.location.href = "HomePage";
+    });
+    document.getElementById('savingForm').addEventListener('submit', function(event){
+        event.preventDefault();
+        var result;
+        var idAccount = document.getElementById("amount").value
+        fetch('/search',{ 
+            method : 'post',
+            headers : {
+                'Content-Type': 'application/json' 
+            },
+            body : JSON.stringify({id: idAccount})
+        })
+        .then(respone => {
+            return respone.json();
+        }) 
+        .then(data =>{
+            console.log(data)
+            showData(data)
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    })
+
+    function showData(data){
+        if(data && Object.keys(data).length > 0){
+            document.getElementById("MaSo").innerHTML = data.id;
+            document.getElementById("LoaiTietKiem").innerHTML = data.typename
+            document.getElementById("khachhang").innerHTML = data.cus_name
+            document.getElementById("sodu").innerHTML = data.passbook_balance
+            document.getElementById("notfind").innerHTML = ''
+        }
+        else{
+            document.getElementById("MaSo").innerHTML = '';
+            document.getElementById("LoaiTietKiem").innerHTML = ''
+            document.getElementById("khachhang").innerHTML = ''
+            document.getElementById("sodu").innerHTML = ''
+            document.getElementById("notfind").innerHTML = 'Không tìm thấy sổ'
+        }
+    }
+    
+
+       
+    </script>
+</body>
+</html>

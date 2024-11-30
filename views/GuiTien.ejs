@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gửi tiền</title>
-    <link rel="stylesheet" href="css/guitien.css">
+    <link rel="stylesheet" href="./css/guitien.css">
     <style>
-        /* tạo Popup */
-        .popup {
+         /* tạo Popup */
+         .popup {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -90,15 +90,26 @@
             
         </form>
     </section>
-    <div class="overlay" id="overlay"></div>
-    <div class="popup" id="popup">
-        <p>Lập phiếu gửi tiền thành công!</p>
-        <button id="closePopup">OK</button>
-    </div>
-    
+
+   <!-- Popup thông báo thành công -->
+   <div class="overlay" id="overlay"></div>
+   <div class="popup" id="popup">
+       <p>Lưu thay đổi thành công!</p>
+       <button id="closePopup">OK</button>
+   </div>
+
+   <!-- Popup xác nhận hủy -->
+   <div class="overlay" id="cancelOverlay"></div>
+   <div class="popup" id="cancelPopup">
+       <p>Bạn có chắc chắn muốn hủy không?</p>
+       <div class="button-row">
+           <button id="closeCancelPopup">Không</button>
+           <button id="confirmCancel">Hủy</button>
+       </div>
+   </div>
+
+   <script src="js/GuiTien.js">
+       
+   </script>
 </body>
-<script src="js/GuiTien.js">
-    
-</script>
 </html>
- 

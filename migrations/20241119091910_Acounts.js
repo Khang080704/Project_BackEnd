@@ -15,14 +15,6 @@ exports.up = async function(knex) {
 	        status int default 0 
         )
     `);
-    
-	await knex.raw(`
-        create table Customer (
-	        cus_name nvarchar(100) not null,
-	        cus_address nvarchar(200) default null,
-	        id_card varchar(15) primary key
-        )
-    `);
 	await knex.raw(`
         create table Typepassbook (
 	        id varchar(255) primary key,
@@ -35,6 +27,7 @@ exports.up = async function(knex) {
 	        min_passbook_balance bigint default 0
         )
     `);
+
     await knex.raw(`
         alter table Passbook 
 	        add constraint fk_customer_id 
@@ -57,5 +50,8 @@ exports.up = async function(knex) {
 exports.down = async function(knex) {
     await knex.raw(`
         DROP TABLE Passbook;
+    `);
+	await knex.raw(`
+        DROP TABLE Typepassbook;
     `);
 };

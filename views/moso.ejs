@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mở Sổ Tiết Kiệm</title>
-    <link rel="stylesheet" href="./css/css_moso.css">
+    <link rel="stylesheet" href="/css/css_moso.css">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         /* Popup  */
@@ -54,6 +55,7 @@
         }
     </style>
 </head>
+
 <body>
     <header class="top-bar">
         <h1>Quản lý Sổ Tiết Kiệm</h1>
@@ -66,34 +68,36 @@
                 <input type="text" id="id" name="id" required>
                 <label for="savingType">Loại tiết kiệm:</label>
                 <!-- chon thay vi nhap -->
-                <select id="loaiTietKiem" name="savingType">
-                    <option value="3_thang">3 tháng</option>
-                    <option value="6_thang">6 tháng</option>
-                    <option value="vo_thoi_han">Vô thời hạn</option>
+                <select id="loaiTietKiem" name="savingType" onchange="getType()">
+                    <% for (var i=0; i < listOfTypes.length ; i++) { %>
+                        <option value="<%= listOfTypes[i].id %>">
+                            <%= listOfTypes[i].typename %>
+                        </option>
+                        <% } %>
                 </select>
                 <!-- <input type="text" id="savingType" name="savingType" required> -->
             </div>
-            
+
             <div class="row">
                 <label for="customer">Khách hàng:</label>
                 <input type="text" id="customer" name="customer" required>
                 <label for="cmnd">CMND:</label>
                 <input type="text" id="cmnd" name="cmnd" required>
             </div>
-            
+
             <div class="row">
                 <label for="address">Địa chỉ:</label>
                 <input type="text" id="address" name="address" required>
                 <label for="openDate">Ngày mở sổ:</label>
                 <input type="date" id="openDate" name="openDate" required>
             </div>
-            
+
             <div class="row">
                 <label for="amount">Số tiền gửi:</label>
                 <input type="text" id="amount" name="amount" required placeholder="Nhập số tiền">
                 <div id="error-message" style="color:red; font-size: 12px;"></div>
             </div>
-            
+
             <div class="button-row">
                 <button type="submit">Mở sổ</button>
                 <button type="button" id="cancelBtn">Hủy</button>
@@ -105,8 +109,141 @@
         <p>Mở sổ tiết kiệm thành công!</p>
         <button id="closePopup">OK</button>
     </div>
+
 </body>
-<script src="js/moso.js">
-        
+<script>
+    function formatNumberWithDots(number) {
+        // Chuyển số thành chuỗi
+        const a = number
+        const numberString = a.toString();
+
+        // Sử dụng biểu thức chính quy để thêm dấu chấm
+        const formattedNumber = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        return formattedNumber;
+    }
+    // Định dạng số tiền nhap do co với dấu chấm
+    function formatCurrency(input) {
+        let value = input.replace(/\D/g, ''); // Loại bỏ ký tự không phải số
+        return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Thêm dấu chấm vào các nhóm 3 chữ số
+    }
+
+    // Kiểm tra số tiền không được ít hơn 100.000 đồng
+    function validateAmount(value) {
+        var minMoney = getType()
+        let rawValue = value.replace(/\./g, ''); // Loại bỏ dấu chấm
+        if (parseInt(rawValue) < minMoney) {
+            return false; // Số tiền nhỏ hơn 100.000 đ
+        }
+        return true;
+    }
+
+
+
+    var myTypesList = <%- JSON.stringify(listOfTypes) %>;
+    console.log(myTypesList)
+
+    function getType() {
+        var minMoney = 0;
+        var type = document.getElementById('loaiTietKiem').value;
+
+        for (var i = 0; i < myTypesList.length; i++) {
+            if (type == myTypesList[i].id) {
+                minMoney = Number(myTypesList[i].min_deposit_money);
+                return minMoney
+            }
+        }
+
+
+    }
+
+
+
+
+    // Xử lý sự kiện khi người dùng nhập số tiền
+    document.getElementById('amount').addEventListener('input', function (e) {
+
+        let formattedValue = formatCurrency(this.value); // Định dạng lại số tiền
+        this.value = formattedValue;
+
+        let errorMessage = document.getElementById('error-message');
+        var minMoney = getType()
+
+        // Kiểm tra số tiền có hợp lệ không
+        if (!validateAmount(this.value)) {
+            errorMessage.textContent = `Số tiền gửi không được ít hơn ${formatNumberWithDots(minMoney)} đ `;
+            document.querySelector('button[type="submit"]').disabled = true; // Vô hiệu hóa nút "Mở sổ"
+        } else {
+            errorMessage.textContent = '';
+            document.querySelector('button[type="submit"]').disabled = false; // Bật lại nút "Mở sổ"
+        }
+    });
+
+    //kiem tra so tien va cho submit sang 1 trang moi
+    document.getElementById('savingForm').addEventListener('submit', function (event) {
+        var minMoney = getType()
+
+        let amountValue = document.getElementById('amount').value;
+
+        // Kiểm tra số tiền trước khi submit
+        if (!validateAmount(amountValue)) {
+            event.preventDefault(); // Ngăn việc submit nếu số tiền không hợp lệ
+            console.log(minMoney)
+            alert(`Số tiền gửi không hợp lệ. Vui lòng nhập số tiền lớn hơn ${formatNumberWithDots(minMoney)} đ.`);
+        } else {
+            let form = event.target;
+            let formData = new FormData(form);
+            let queryString = new URLSearchParams(formData).toString()
+            let formDataObject = {};
+
+            event.preventDefault(); // Ngăn trình duyệt nạp lại trang
+
+            formData.forEach((value, key) => {
+                formDataObject[key] = value
+            });
+            console.log(formDataObject)
+
+            let urlToSend = "./moso?" + queryString;
+
+            fetch('/moso', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formDataObject)
+            })
+                .then((respone) => {
+                    return respone.json()
+                })
+                .then(data => {
+                    if (data.status == false) {
+                        alert(data.message)
+                    }
+                    else {
+                        document.getElementById('popup').classList.add('show');
+                        document.getElementById('overlay').classList.add('show');
+                    }
+
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+        }
+    });
+
+
+    // Nút đóng popup
+    document.getElementById('closePopup').addEventListener('click', function () {
+        // Chuyển hướng về trang homepage
+        window.location.href = "HomePage";
+    });
+
+
+    document.getElementById('cancelBtn').addEventListener('click', function () {
+        if (confirm('Bạn có chắc chắn muốn hủy không?')) {
+            window.location.href = "HomePage"; // Chuyển về trang homepage /
+        }
+    });
 </script>
+
 </html>

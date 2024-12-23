@@ -100,17 +100,17 @@ function insertToCustomer(info, connection) {
 function insertToPassbook(info, connection) {
     return new Promise((resolve, reject) => {
         const query = `
-            INSERT INTO Passbook (id, passbook_balance, passbook_type, passbook_customer, open_date, status)
+            INSERT INTO Passbook (id, passbook_balance, passbook_type, passbook_customer, open_date, status_passbook)
             VALUES (@ID, @balance, @type, @pass_cus, @opendate, @status)
         `;
         const request = new Request(query, (err) => {
             if (err) {
                 console.error('Lỗi khi thêm sổ tiết kiệm:', err.message);
                 return reject(err);
-            }
+            } 
         });
 
-        request.addParameter('ID', TYPES.VarChar, info.id);
+        request.addParameter('ID', TYPES.Int, Number(info.id));
         request.addParameter('balance', TYPES.BigInt, BigInt(info.amount.replace(/\./g, '')));
         request.addParameter('type', TYPES.VarChar, info.savingType);
         request.addParameter('pass_cus', TYPES.VarChar, info.cmnd);

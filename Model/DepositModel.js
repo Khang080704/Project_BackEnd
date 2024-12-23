@@ -45,22 +45,20 @@ DepositMoney = (req, res) => {
  
 function insertDepositBill(info, connection){
     return new Promise((resolve, reject) => {
-        const query = `Insert into Depositbill 
-                        values (@passbook, @money, @date)`
+        const query = `exec sp_insert_deposit_bill @passbook, @money, @date`  
         const request = new Request(query, (err) => {
             if (err) {
                 return reject(err);
             }
         });
-
-        request.addParameter('passbook', TYPES.VarChar, info.id);
+        request.addParameter('passbook', TYPES.Int,Number(info.id));
         request.addParameter('money', TYPES.BigInt, BigInt(info.amount.replace(/\./g, '')));
-        request.addParameter('date', TYPES.Date, info.openDate);
+        request.addParameter('date', TYPES.DateTime, info.openDate);
 
         request.on('requestCompleted', resolve)
         request.on('error', reject);
 
-        connection.execSql(request);
+        connection.execSql(request); 
     })
 }
 
@@ -74,7 +72,7 @@ function checkIDPassbookExits(info, connection){
             }
         });
 
-        request.addParameter('id', TYPES.VarChar, info.id);
+        request.addParameter('id', TYPES.Int, Number(info.id));
 
         let exists = false;
 
@@ -100,7 +98,7 @@ function checkCustomerExits(info, connection){
             }
         });
 
-        request.addParameter('id', TYPES.VarChar, info.id);
+        request.addParameter('id', TYPES.Int, Number(info.id));
         request.addParameter('name', TYPES.NVarChar, info.customer);
 
         let exists = false;
@@ -127,14 +125,14 @@ function checkTypePassbook(info, connection){
             }
         });
 
-        request.addParameter('id', TYPES.VarChar, info.id);
+        request.addParameter('id', TYPES.Int, Number(info.id));
 
         let exists = false;
 
         request.on('row', (columns) => {
             columns.forEach(element => {
                 console.log(element.value)
-                if(element.value == 'vo_thoi_han'){
+                if(element.value == 3){
                     exists = true; // Nếu có kết quả 
                 }    
                 else{
@@ -153,5 +151,7 @@ function checkTypePassbook(info, connection){
 
 
 module.exports = {
-    DepositMoney 
+    DepositMoney,
+    checkCustomerExits,
+    checkIDPassbookExits 
 }

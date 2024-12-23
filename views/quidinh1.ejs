@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thay đổi qui định</title>
+    <link rel="stylesheet" href="./css/quidinh1.css">
+    <style>
+        /* Popup */
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        /* Hiển thị popup */
+        .popup.show {
+            display: block;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* Nút đóng popup */
+        .popup button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: lightblue;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="top-bar">
+        <h1>Quản lý Sổ Tiết Kiệm</h1>
+    </header>
+
+    <div class="main-content">
+
+        <section class="saving-account-list">
+            <h2>Danh Sách Loại Kỳ Hạn</h2>
+            <div class="table-container">
+                <table id="savingAccountTable">
+                    <thead>
+                        <tr>
+                            <th>Loại kỳ hạn</th>
+                            <th>Thời gian quy định</th>
+                            <th>Lãi suất</th>
+                            <th>Số tiền quy định</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+
+            </div>
+            <button onclick="showAdd()"> + </button>
+            <div class="button-row">
+                <button type="button" id="cancelBtn">Quay lại</button>
+            </div>
+        </section>
+
+
+
+    </div>
+
+
+    <div id="new_form" class="add-new-form" hidden>
+        <h3>Thêm Loại Kỳ Hạn Mới</h3>
+        <form id="addNewForm">
+            <!-- <div class="row">
+                <label for="newType">Loại kỳ hạn:</label>
+                <input type="text" id="newType" required placeholder="Nhập tên loại kỳ hạn">
+            </div> -->
+            <div class="row">
+                <label for="newTime">Thời gian gửi tối thiểu:</label>
+                <input type="number" id="newTime" required placeholder="Nhập thời gian (tháng)">
+                <span id="error-time" style="color: red; font-size: 12px;"></span>
+            </div>
+            <div class="row">
+                <label for="newRate">Lãi suất:</label>
+                <input type="number" step="any" id="newRate" required placeholder="Nhập số (%)">
+                <span id="error-rate" style="color: red; font-size: 12px;"></span>
+            </div>
+
+            <div class="row">
+                <label for="newAmount">Số tiền quy định:</label>
+                <input type="text" id="newAmount" required placeholder="Nhập số tiền">
+                <span id="error-message" style="color: red; font-size: 12px;"></span>
+            </div>
+            <div class="button-row">
+                <button type="submit">Thêm</button>
+                <button onclick="cancelForm()" id="cancelBtn">Hủy</button>
+            </div>
+        </form>
+    </div>
+
+    </section>
+
+    <div id="popup" class="popup">
+        <p>Thêm loại kỳ hạn thành công!</p>
+        <button id="closePopup">Đóng</button>
+    </div>
+    <div id="overlay" class="overlay"></div>
+
+    <div class="popup" id="Error">
+        <p id="message"></p>
+        <button id="close">OK</button>
+    </div>
+
+    <script>
+        // Mock data 
+        // let savingAccounts = [
+        //     { id: 0, type: "3 tháng", time: 3, rate: 0.5, amount: 15000 },
+        //     { id: 1, type: "6 tháng", time: 6, rate: 0.55, amount: 20000 },
+        //     { id: 2, type: "Vô thời hạn", time: 0, rate: 0.15, amount: 10000 }
+        // ];
+
+        let savingAccounts = <%- JSON.stringify(listOfTypes) %>;
+        console.log(savingAccounts)
+
+        function showAdd() {
+            document.getElementById('new_form').hidden = false
+        }
+        function cancelForm() {
+            document.getElementById('new_form').hidden = true
+        }
+
+        // Hiển thị danh sách kỳ hạn
+        function renderSavingAccounts() {
+            const tbody = document.getElementById('savingAccountTable').querySelector('tbody');
+            tbody.innerHTML = ''; // Xóa nội dung cũ
+            savingAccounts.forEach((account, index) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+            <td>${account.typename}</td>
+            <td>${account.term} tháng</td>
+            <td>${account.interest_rate * 100}%</td>
+            <td>${Number(account.min_deposit_money).toLocaleString()} đ</td>
+            <td><button class="delete-btn" data-index="${account.id}">Xóa</button>
+                <button class="edit-btn" data-index="${account.id}">Chỉnh sửa</button>
+                </td>
+        `;
+                tbody.appendChild(row);
+            });
+
+            // Thêm sự kiện cho nút xóa
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const index = this.getAttribute('data-index');
+                    console.log(index)
+                    //savingAccounts.splice(index, 1); // Xóa phần tử
+                    for (var i = 0; i < savingAccounts.length; i++) {
+                        if (savingAccounts[i].id == index) {
+                            savingAccounts.splice(i, 1);
+                            break;
+                        }
+                    }
+                    //renderSavingAccounts(); // Cập nhật danh sách
+
+                    fetch('/quidinh_1', {
+                            method: 'delete',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({id: index})
+                        })
+                            .then((respone) => {
+                                return respone.json()
+                            })
+                            .then(data => {
+                                if(data.status == true){
+                                    location.reload();
+                                }
+                                else{
+                                    document.getElementById('message').innerHTML = data.message
+                                    document.getElementById('Error').classList.add('show');
+                                    document.getElementById('overlay').classList.add('show');
+
+                                    document.getElementById('close').addEventListener('click', () => {
+                                    document.getElementById('Error').classList.remove('show');
+                                    document.getElementById('overlay').classList.remove('show');
+                        })
+                                }
+                            })
+                            .catch(err => console.log(err))
+                    
+                });
+                
+            });
+
+            // Thêm sự kiện cho nút chỉnh sửa
+            document.querySelectorAll('.edit-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const row = this.closest('tr');
+                    const cells = row.querySelectorAll('td');
+
+                    if (this.textContent === "Chỉnh sửa") {
+                        // Đổi các ô trong hàng thành input
+                        cells.forEach((cell, index) => {
+                            if (index < cells.length - 1 && index > 2) { // Bỏ qua cột "Hành động"
+                                const currentValue = cell.textContent.trim();
+                                cell.innerHTML = `<input type="number" class="edit-input" required>`;
+                            }
+                        });
+
+                        // Đổi nút "Chỉnh sửa" thành "Lưu"
+                        this.textContent = "Lưu";
+                        this.classList.add("save-btn");
+                        this.classList.remove("edit-btn");
+                    } else if (this.textContent === "Lưu") {
+                        const newMoney = Number(cells[3].querySelector('input').value)
+                        cells[3].textContent = newMoney.toLocaleString() + "đ"
+                        const index = this.getAttribute('data-index');
+
+                        const updateType = {
+                            id: index,
+                            min_deposit_money: newMoney
+                        }
+
+                        // Đổi nút "Lưu" lại thành "Chỉnh sửa"
+                        this.textContent = "Chỉnh sửa";
+                        this.classList.add("edit-btn");
+                        this.classList.remove("save-btn");
+
+                        fetch('/quidinh_1', {
+                            method: 'put',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(updateType)
+                        })
+                            .then((respone) => {
+                                return respone
+                            })
+                            .then(data => {
+                                console.log(data);
+                            })
+                            .catch(err => console.log(err))
+                    }
+                });
+            });
+        }
+
+
+        // Xử lý thêm loại kỳ hạn mới
+        document.getElementById('addNewForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Ngăn form reload
+
+            //const newType = document.getElementById('newType').value;
+            const newTime = parseFloat(document.getElementById('newTime').value);
+            const newRate = parseFloat(document.getElementById('newRate').value);
+            const newAmount = parseInt(document.getElementById('newAmount').value.replace(/\./g, ''));
+
+            if ( newTime >= 0 && newRate >= 0 && newAmount > 0) {
+                //savingAccounts.push({ type: newType, time: newTime, rate: newRate, amount: newAmount });
+                renderSavingAccounts(); // Cập nhật danh sách
+                document.getElementById('addNewForm').reset(); // Xóa nội dung form
+                document.getElementById('popup').classList.add('show'); // Hiển thị popup
+                document.getElementById('overlay').classList.add('show'); // Hiển thị overlay
+                const newType = {
+                    term: newTime,
+                    rate: Number(newRate) / 100,
+                    amount: newAmount
+                }
+
+                fetch('/quidinh_1', {
+                    method: 'post',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newType)
+                })
+                    .then((respone) => {
+                        return respone.json()
+                    })
+                    .then(data => {
+                        console.log(data);
+                    })
+                    .catch(err => console.log(err))
+
+            } else {
+                alert('Vui lòng nhập đúng thông tin!');
+            }
+
+            document.getElementById('new_form').hidden = true
+        });
+
+
+        // Đóng popup thành công
+        document.getElementById('closePopup').addEventListener('click', function () {
+            document.getElementById('popup').classList.remove('show');
+            document.getElementById('overlay').classList.remove('show');
+        });
+
+        // Định dạng số tiền nhập vào
+        function formatCurrency(input) {
+            // Loại bỏ mọi ký tự không phải số
+            let value = input.replace(/[^\d]/g, '');
+            // Thêm dấu chấm theo từng nhóm 3 số
+            return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        }
+
+        // Kiểm tra tính hợp lệ của số tiền
+        function validateAmount(value) {
+            let rawValue = value.replace(/\./g, ''); // Loại bỏ dấu chấm
+            return parseInt(rawValue) > 0; // Chỉ hợp lệ khi giá trị > 0
+        }
+
+        // Xử lý nhập số tiền
+        document.getElementById('newAmount').addEventListener('input', function () {
+            // Lấy giá trị nhập vào và vị trí con trỏ trước khi định dạng
+            let input = this.value;
+            let cursorPosition = this.selectionStart;
+
+            // Loại bỏ tất cả ký tự không phải số
+            let rawValue = input.replace(/[^\d]/g, '');
+
+            // Định dạng lại giá trị
+            let formattedValue = formatCurrency(rawValue);
+
+            // Tính toán độ lệch do định dạng lại
+            let diff = formattedValue.length - input.length;
+
+            // Cập nhật giá trị ô input
+            this.value = formattedValue;
+
+            // Điều chỉnh vị trí con trỏ để không bị lệch
+            this.setSelectionRange(cursorPosition + diff, cursorPosition + diff);
+
+            // Kiểm tra tính hợp lệ của giá trị
+            let errorMessage = document.getElementById('error-message');
+            if (!validateAmount(formattedValue)) {
+                errorMessage.textContent = 'Số tiền gửi phải lớn hơn 0 đ';
+                errorMessage.style.display = 'block'; // Hiển thị lỗi
+                document.querySelector('button[type="submit"]').disabled = true;
+            } else {
+                errorMessage.style.display = 'none'; // Ẩn lỗi
+                document.querySelector('button[type="submit"]').disabled = false;
+            }
+        });
+
+        // Kiểm tra tính hợp lệ của thời gian quy định
+        document.getElementById('newTime').addEventListener('input', function () {
+            let timeValue = parseFloat(this.value);
+            let errorTime = document.getElementById('error-time');
+            if (isNaN(timeValue) || timeValue < 0) {
+                errorTime.textContent = 'Thời gian quy định phải lớn hơn hoặc bằng 0';
+                errorTime.style.display = 'block';
+                document.querySelector('button[type="submit"]').disabled = true;
+            } else {
+                errorTime.style.display = 'none';
+                document.querySelector('button[type="submit"]').disabled = false;
+            }
+        });
+
+        // Kiểm tra tính hợp lệ của lãi suất
+        document.getElementById('newRate').addEventListener('input', function () {
+            let rateValue = parseFloat(this.value);
+            let errorRate = document.getElementById('error-rate');
+            if (isNaN(rateValue) || rateValue < 0) {
+                errorRate.textContent = 'Lãi suất phải lớn hơn hoặc bằng 0';
+                errorRate.style.display = 'block';
+                document.querySelector('button[type="submit"]').disabled = true;
+            } else {
+                errorRate.style.display = 'none';
+                document.querySelector('button[type="submit"]').disabled = false;
+            }
+        });
+
+        // Xử lý sự kiện quay lại
+
+        document.getElementById('cancelBtn').addEventListener('click', function () {
+            window.location.href = "thaydoiquidinh"; // Điều hướng về trang khác
+        });
+        // Hiển thị danh sách ban đầu
+        renderSavingAccounts();
+    </script>
+
+</body>
+
+</html>

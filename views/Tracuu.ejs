@@ -81,14 +81,12 @@
                   
                 <table style="width:100%">
                   <tr>
-                    <th>STT</th>
                     <th>MÃ SỐ</th>
                     <th>LOẠI TIẾT KIỆM</th>
                     <th>KHÁCH HÀNG</th>
                     <th>SỐ DƯ</th>
                   </tr>
                   <tr>
-                    <td></td>
                     <td id="MaSo"></td>
                     <td id="LoaiTietKiem"></td>
                     <td id="khachhang"></td>
@@ -107,6 +105,16 @@
 
    
 <script>
+    function formatNumberWithDots(number) {
+        // Chuyển số thành chuỗi
+        const a = number
+        const numberString = a.toString();
+
+        // Sử dụng biểu thức chính quy để thêm dấu chấm
+        const formattedNumber = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+        return formattedNumber;
+    }
 
     // Nút đóng popup
     document.getElementById('backBtn').addEventListener('click', function() {
@@ -122,7 +130,7 @@
             headers : {
                 'Content-Type': 'application/json' 
             },
-            body : JSON.stringify({id: idAccount})
+            body : JSON.stringify({id: Number(idAccount)})
         })
         .then(respone => {
             return respone.json();
@@ -141,7 +149,7 @@
             document.getElementById("MaSo").innerHTML = data.id;
             document.getElementById("LoaiTietKiem").innerHTML = data.typename
             document.getElementById("khachhang").innerHTML = data.cus_name
-            document.getElementById("sodu").innerHTML = data.passbook_balance
+            document.getElementById("sodu").innerHTML = formatNumberWithDots(data.passbook_balance)
             document.getElementById("notfind").innerHTML = ''
         }
         else{

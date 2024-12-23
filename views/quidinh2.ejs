@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thay đổi qui định</title>
+    <link rel="stylesheet" href="css/quidinh2.css">
+    <style>
+        /* Popup  */
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 300px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            border-radius: 10px;
+        }
+
+        /* Hiển thị popup */
+        .popup.show {
+            display: block;
+        }
+
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            z-index: 999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .overlay.show {
+            display: block;
+        }
+
+        /* Nút đóng popup */
+        .popup button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: lightblue;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header class="top-bar">
+        <h1>Quản lý Sổ Tiết Kiệm</h1>
+    </header>
+    <section class="saving-account-form">
+        <h2>THAY ĐỔI QUI ĐỊNH 2</h2>
+        <form id="savingForm">
+            <div class="row">
+                <label for="savingType" style="font-size: 18px;">Chọn loại kì hạn thay đổi</label>
+                <select id="loaiTietKiem">
+                    <% for (var i=0; i < listOfTypes.length ; i++) { %>
+                        <option value="<%= listOfTypes[i].id %>">
+                            <%= listOfTypes[i].typename %>
+                        </option>
+                        <% } %>
+                </select>
+            </div>
+            <div class="row">
+                <label for="amount" style="font-size: 18px;">Thay đổi thời gian gởi tối thiểu:</label>
+                <input type="text" id="amount" name="amount" required placeholder="Nhập thời gian (tháng)">
+                <div id="error-message" style="color:red; font-size: 12px;"></div>
+            </div>
+            
+            <div class="row">
+                <label for="amount" style="font-size: 18px;">Lãi suất của kì hạn:</label>
+                <input type="number" step="any" id="interest" name="amount" required placeholder="Nhập lãi suất (%)">
+                <div id="error-message" style="color:red; font-size: 12px;"></div>
+            </div>
+
+            <div class="row2">
+                <label for="amount" style="color:red; font-size: 12px; font:italic">Chú ý: Không ảnh hưởng các sổ chưa đáo hạn.</label>
+            </div>
+            
+            <div class="button-row">
+                <button type="submit">Lưu</button>
+                <button type="button" id="cancelBtn">Hủy</button>
+            </div>
+        </form>
+    </section>
+     <!-- Popup thông báo thành công -->
+     <div class="overlay" id="overlay"></div>
+     <div class="popup" id="popup">
+         <p>Lưu thay đổi thành công!</p>
+         <button id="closePopup">OK</button>
+     </div>
+ 
+     <!-- Popup xác nhận hủy -->
+     <div class="overlay" id="cancelOverlay"></div>
+     <div class="popup" id="cancelPopup">
+         <p>Bạn có chắc chắn muốn hủy không?</p>
+         <div class="button-row">
+             <button id="closeCancelPopup">Không</button>
+             <button id="confirmCancel">Hủy</button>
+         </div>
+     </div>
+ 
+     <script>
+         // Định dạng số tiền nhập vào
+         function formatCurrency(input) {
+             let value = input.replace(/\D/g, ''); // Loại bỏ ký tự không phải số
+             return value.replace(/\B(?=(\d{3})+(?!\d))/g, '.'); // Thêm dấu chấm vào các nhóm 3 chữ số
+         }
+ 
+         function validateAmount(value) {
+             let rawValue = value.replace(/\./g, ''); // Loại bỏ dấu chấm
+             return parseInt(rawValue) > 0; // Chỉ hợp lệ khi giá trị > 0
+         }
+ 
+         // Xử lý nhập số tiền
+         document.getElementById('amount').addEventListener('input', function () {
+             this.value = formatCurrency(this.value);
+ 
+             let errorMessage = document.getElementById('error-message');
+             if (!validateAmount(this.value)) {
+                 errorMessage.textContent = 'Thời gian phải từ 1 tháng trở lên';
+                 document.querySelector('button[type="submit"]').disabled = true;
+             } else {
+                 errorMessage.textContent = '';
+                 document.querySelector('button[type="submit"]').disabled = false;
+             }
+         });
+ 
+         // Xử lý sự kiện submit form
+         document.getElementById('savingForm').addEventListener('submit', function (event) {
+             event.preventDefault(); // Ngăn submit mặc định
+             document.getElementById('popup').classList.add('show');
+             document.getElementById('overlay').classList.add('show');
+
+             var savingType = document.getElementById('loaiTietKiem').value
+             var monthChange = document.getElementById('amount').value
+             var interest = document.getElementById('interest').value
+            
+             fetch('/quidinh_2', {
+                method: 'post',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    savingtype: savingType,
+                    month: Number(monthChange.replace(/\./g, '')),
+                    interest: Number(interest) / 100
+                })
+            })
+                .then((respone) => {
+                    return respone.json()
+                })
+                .then(data => {
+                    console.log(data)
+
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+         });
+ 
+         // Đóng popup thành công
+         document.getElementById('closePopup').addEventListener('click', function () {
+             window.location.href = "thaydoiquidinh";
+         });
+ 
+         // Xử lý sự kiện hủy
+         document.getElementById('cancelBtn').addEventListener('click', function () {
+             document.getElementById('cancelPopup').classList.add('show');
+             document.getElementById('cancelOverlay').classList.add('show');
+         });
+ 
+         // Xác nhận hủy
+         document.getElementById('confirmCancel').addEventListener('click', function () {
+             window.location.href = "thaydoiquidinh"; // Điều hướng về trang khác
+         });
+ 
+         // Đóng popup hủy
+         document.getElementById('closeCancelPopup').addEventListener('click', function () {
+             document.getElementById('cancelPopup').classList.remove('show');
+             document.getElementById('cancelOverlay').classList.remove('show');
+         });
+     </script>
+ </body>
+ </html>
+ 

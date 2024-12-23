@@ -26,11 +26,12 @@ searchAccount = (req, res) => {
 }
 
 function findByID(id, connection){
+    console.log(id)
     return new Promise((resolve, rejects) =>{
         var request = new Request(`Select p.id, tp.typename, c.cus_name, p.passbook_balance
                                     from Passbook p join customer c on p.passbook_customer = c.id_card
                                                     join typepassbook tp on tp.id = p.passbook_type
-                                    where p.id=@id
+                                    where p.id=@id 
                                     ` , (err)=>{
             if(err){
                 console.log(err)
@@ -38,7 +39,7 @@ function findByID(id, connection){
             }
         })
         var result = [];  
-        request.addParameter('id',TYPES.VarChar, id);
+        request.addParameter('id',TYPES.Int, id);
         request.on('row', function(columns) {  
             let row = {};
             columns.forEach(column => {

@@ -1,7 +1,7 @@
 const config = require("../Database/Config/Config");
 const { Connection, TYPES, Request } = require('tedious');
 
-async function getType() {
+async function getCustomer() {
     var connection = new Connection(config);
 
     return new Promise((resolve, reject) => {
@@ -11,9 +11,9 @@ async function getType() {
                 return reject(err);
             }
 
-            console.log("Connected");
+            console.log("Data connected");
             try {
-                const result = await getListType(connection);
+                const result = await getListCustomer(connection);
                 resolve(result);
             } catch (error) {
                 reject(error);
@@ -26,9 +26,9 @@ async function getType() {
     });
 }
 
-getListType = (connection) =>{
+getListCustomer = (connection) =>{
     return new Promise((resolve, reject) => {
-        const query = `SELECT id, typename, interest_rate ,term ,min_deposit_money FROM typepassbook`;
+        const query = `SELECT * FROM Customer`;
         const request = new Request(query, (err) => {
             if (err) {
                 console.error('Lỗi khi kiểm tra tồn tại khách hàng:', err.message);
@@ -55,5 +55,5 @@ getListType = (connection) =>{
 }
 
 module.exports = {
-    getType
+    getCustomer
 }

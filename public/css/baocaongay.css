@@ -1,0 +1,198 @@
+/* Body và nền */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../image/lập phiếu rút tiền.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Arial', sans-serif;
+}
+
+
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 30px; /*cỡ chữ*/
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Xóa khoảng cách giữa các ô */
+    margin-top: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    background-color: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Màu xen kẽ các dòng */
+}
+
+tr:hover {
+    background-color: #d1ecf1; /* Đổi màu khi hover */
+}
+
+/* Khung form */
+.saving-account-form {
+    width: 700px;
+    padding: 30px;
+    margin-top: 100px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+
+/* canh chỉnh cho đều trong cột */
+.row {
+    
+    display: grid;
+    grid-template-columns: 100px 1fr 100px 1fr; /* 2 cột label và 2 cột input */
+    column-gap: 20px; /* Khoảng cách giữa các cột */
+    row-gap: 20px; /* Khoảng cách giữa các hàng */
+    align-items: center; /* Căn chỉnh theo chiều dọc */
+}
+.row input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 225px; /*Chiều rộng cho input */
+     box-sizing: border-box; /*Đảm bảo padding không làm thay đổi kích thước */
+    
+}
+/* Định dạng label để căn thẳng hàng với input */
+.row button {
+    width: 150px; /* Tăng chiều rộng của label */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px; /* Tạo khoảng cách giữa ô tìm kiếm và bảng */
+}
+
+/* Nút bấm */
+button, #backBtn {
+    width: 120px;
+    padding: 10px;
+    background: linear-gradient(to bottom, #007bff, #0056b3); /* Hiệu ứng chuyển xanh dương */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+button:hover, #backBtn:hover {
+    transform: scale(1.1);
+    background-color: #004099; /* Xanh đậm hơn */
+}
+
+.row a {
+    text-decoration: none; /* Bỏ gạch chân */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Khoảng cách giữa hình ảnh và chữ */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.row a:hover {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng khi hover */
+}
+
+
+
+/* Thanh màu xanh đầu trang */
+.top-bar {
+    width: 100%;
+    background: linear-gradient(to right, #007bff, #00c6ff);
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Căn chỉnh khoảng cách */
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.saving-account-form {
+    margin-top: 100px;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.9); /* Nền trong suốt nhẹ */
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Đổ bóng rõ hơn */
+    animation: fadeIn 0.8s ease-in-out; /* Hiệu ứng xuất hiện */
+}
+
+.button-row {
+    /* Đặt khoảng cách giữa các nút */
+    display: flex;
+   justify-content: center; /* Căn giữa hai nút */
+   gap: 20px; /* Khoảng cách giữa hai nút */
+   margin-top: 20px;
+
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+body {
+    scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0056b3;
+}
+#mothlyReport{
+    background: linear-gradient(to bottom, #00ff84, #00b31b);
+    font-weight: bold;
+}

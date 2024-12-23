@@ -1,0 +1,356 @@
+/* body */
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;  /* Căn giữa theo chiều ngang */
+    align-items: center;      /* Căn giữa theo chiều dọc */
+    background-image: url("../image/lập phiếu rút tiền.jpg");
+    background-repeat: no-repeat; /* Ngăn nền lặp */
+    background-size: cover; /* Phủ kín toàn bộ trang */
+    background-position: center; /* Căn giữa hình nền */
+    background-attachment: fixed; /* Nền cố định khi cuộn */
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 0;
+    padding-top: 70px;
+}
+
+
+h2 {
+    text-align: center;
+    color: #333;
+    font-size: 30px; /*cỡ chữ*/
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+    text-align: center;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3); /* Hiệu ứng đổ bóng chữ */
+    margin-bottom: 30px; /* Tạo khoảng cách giữa tiêu đề và row */
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Nền sáng để nổi bật */
+    border-radius: 8px;
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse; /* Xóa khoảng cách giữa các ô */
+    margin-top: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+    background-color: white;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #007bff;
+    color: white;
+    text-transform: uppercase;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Màu xen kẽ các dòng */
+}
+
+tr:hover {
+    background-color: #d1ecf1; /* Đổi màu khi hover */
+}
+
+  
+/* sửa toàn bộ cái khhung */
+.saving-account-form {
+    width: 650px; 
+    margin: 50px auto; /* Đặt form ở giữa trang với khoảng cách trên dưới */
+    padding: 30px;
+    
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* canh chỉnh cho đều trong cột */
+.row {
+/*     
+    display: grid;
+    grid-template-columns: 100px 1fr 100px 1fr; /* 2 cột label và 2 cột input */
+  /*  column-gap: 20px; /* Khoảng cách giữa các cột */
+ /*   row-gap: 20px; /* Khoảng cách giữa các hàng */
+    /*align-items: center; /*Căn chỉnh theo chiều dọc */
+ 
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    background-color: rgba(255, 255, 255, 0.8); /* Nền trắng mờ */
+    width: 400px;
+    text-align: left;
+    margin-bottom: 5px; /* Tạo khoảng cách giữa các row */
+}
+.row input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 225px; /*Chiều rộng cho input */
+     box-sizing: border-box; /*Đảm bảo padding không làm thay đổi kích thước */
+     background-color: rgba(255, 255, 255, 0.8); /* Nền sáng để nổi bật */
+
+    
+}
+/* Định dạng label để căn thẳng hàng với input */
+.row button {
+    width: 150px; /* Tăng chiều rộng của label */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px; /* Tạo khoảng cách giữa ô tìm kiếm và bảng */
+}
+
+button[type="submit"] {
+    background-color: #28a745; /* Xanh lá */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+button[type="button"]#cancelBtn {
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+
+button:hover {
+    transform: scale(1.1); /* Tăng kích thước khi hover */
+    background-color: #1e7e34; /* Đổi màu */
+}
+
+
+
+
+
+.error-message-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px; /* Điều chỉnh vị trí */
+    margin-bottom: 15px; /* Thêm khoảng cách */
+    text-align: right;
+
+
+            width: 100%; /
+}
+
+#error-message {
+    color: red;
+    font-size: 12px;
+
+            flex-basis: 100%;  /* Chiếm toàn bộ chiều rộng dòng */
+    
+}
+.button-row {
+     /* Đặt khoảng cách giữa các nút */
+     display: flex;
+    justify-content: center; /* Căn giữa hai nút */
+    gap: 20px; /* Khoảng cách giữa hai nút */
+    margin-top: 20px;
+
+}
+
+
+/* Thanh màu xanh đầu trang */
+.top-bar {
+    width: 100%;
+    background: linear-gradient(to right, #007bff, #00c6ff); /* Hiệu ứng chuyển màu */
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase; /* Chữ in hoa */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+}
+
+
+/* Căn chỉnh phần nội dung xuống dưới để không bị che bởi thanh */
+.saving-account-form {
+    width: 700px;
+    padding: 30px;
+    margin-top: 100px;
+    background: rgba(255, 255, 255, 0.9); /* Nền trong suốt nhẹ */
+    border-radius: 15px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Đổ bóng rõ hơn */
+    animation: fadeIn 0.8s ease-in-out; /* Hiệu ứng xuất hiện */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    scroll-behavior: smooth; /* Cuộn trang mượt */
+}
+
+::-webkit-scrollbar {
+    width: 10px; /* Chiều rộng thanh cuộn */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #007bff;
+    border-radius: 5px; /* Bo góc thanh cuộn */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #0056b3; /* Đổi màu khi hover */
+}
+
+.button-row button:nth-child(1) {
+    background-color: #28a745; /* Xanh lá */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.button-row button:nth-child(2) {
+    background-color: #dc3545; /* Đỏ */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.saving-account-list {
+    width: 700px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.8s ease-in-out;
+}
+
+.saving-account-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: white;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.saving-account-list th, .saving-account-list td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.saving-account-list th {
+    background-color: #007bff;
+    color: white;
+    text-transform: uppercase;
+}
+
+.saving-account-list tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.saving-account-list tr:hover {
+    background-color: #d1ecf1;
+}
+
+.add-new-form {
+    margin-top: 30px;
+}
+
+.add-new-form h3 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Vùng chứa bảng với thanh cuộn dọc */
+.table-container {
+    max-height: 400px; /* Chiều cao tối đa của vùng chứa bảng */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+    margin: 20px auto; /* Căn giữa theo chiều ngang */
+}
+
+/* Bảng */
+#savingAccountTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#savingAccountTable th, #savingAccountTable td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Tiêu đề bảng cố định */
+#savingAccountTable thead {
+    position: sticky;
+    top: 0;
+    background-color: #007bff;
+    color: white;
+    z-index: 1;
+    text-transform: uppercase;
+}
+
+.main-content {
+    display: block;
+    width: 80%; /* Căn giữa nội dung */
+    margin: auto;
+    padding-bottom: 50px; /* Thêm khoảng cách dưới */
+}
+
+button.edit-btn {
+    display: inline-block; /* Đảm bảo nút hiện ra */
+    background-color: #ffc107; /* Màu vàng */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+button.edit-btn:hover {
+    background-color: #e0a800; /* Màu vàng đậm hơn khi hover */
+    transform: scale(1.1); /* Phóng to nhẹ */
+}

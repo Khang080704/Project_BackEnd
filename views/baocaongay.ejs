@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="vi">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Báo cáo mở/đóng sổ tháng</title>
-    <link rel="stylesheet" href="./css/baocaothang.css">
-    <style>
+    <title>Báo cáo doanh sổ hoạt động ngày</title>
+    <link rel="stylesheet" href="css/baocaongay.css"> 
+     <style>
         /* Popup  */
         .popup {
             display: none;
@@ -53,102 +52,81 @@
             border-radius: 5px;
             cursor: pointer;
         }
-    </style>
+    </style> 
 </head>
-
 <body>
     <header class="top-bar">
         <h1>Quản lý Sổ Tiết Kiệm</h1>
     </header>
     <section class="saving-account-form">
-
+   
         <form id="savingForm">
-            <h2>BÁO CÁO MỞ/ĐÓNG SỔ THÁNG</h2>
+            <h2>BÁO CÁO DOANH SỐ HOẠT ĐỘNG NGÀY</h2>
             <div class="row">
-                <div class="field">
-                    <label for="savingType">Loại tiết kiệm:</label>
-
-                    <select id="loaiTietKiem">
-                        <% for (var i=0; i < listOfTypes.length ; i++) { %>
-                            <option value="<%= listOfTypes[i].id %>">
-                                <%= listOfTypes[i].typename %>
-                            </option>
-                            <% } %>
-                    </select>
-                </div>
-                <div class="field">
-                    <label for="month">Tháng:</label>
-                    <!-- <select id="month" name="month">
-                        <option value="1">Tháng 1</option>
-                        <option value="2">Tháng 2</option>
-                        <option value="3">Tháng 3</option>
-                        <option value="4">Tháng 4</option>
-                        <option value="5">Tháng 5</option>
-                        <option value="6">Tháng 6</option>
-                        <option value="7">Tháng 7</option>
-                        <option value="8">Tháng 8</option>
-                        <option value="9">Tháng 9</option>
-                        <option value="10">Tháng 10</option>
-                        <option value="11">Tháng 11</option>
-                        <option value="12">Tháng 12</option>
-                    </select> -->
-                    <input type="month" id="month" name="start" required/>
-                </div>
-
+                <label for="openDate">Ngày:</label>
+                <input type="date" id="chooseDate" name="chooseDate" required>
+                <div id="error-message" style="color:red; font-size: 12px;"></div>
             </div>
-
-
             <style>
-                table,
-                th,
-                td {
-                    border: 1px solid black;
+                table, th, td {
+                  border:1px solid black;
                 }
-            </style>
-
-            <body>
-                <table style="width:100%" id="monthlyTable">
-                    <tr>
-                        <th>STT</th>
-                        <th>NGÀY</th>
-                        <th>SỔ MỞ</th>
-                        <th>SỔ ĐÓNG</th>
-                        <th>CHÊNH LỆCH</th>
-                    </tr>
+                </style>
+                <body>
+                  
+                <table style="width:100%" id="dailyTable">
+                  <tr>
+                    <th>STT</th>
+                    <th>LOẠI TIẾT KIỆM</th>
+                    <th>TỔNG THU </th>
+                    <th>TỔNG CHI</th>
+                    <th>CHÊNH LỆCH</th>
+                  </tr>
+                  <!-- <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr> -->
                 </table>
-                <p id="notfind"></p>
-
-            </body>
+                <p id="notfind"></p>                
+                </body>
             <div class="button-row">
                 <button type="button" id="backBtn">Quay lại</button>
                 <button type="submit" id="mothlyReport">Xem báo cáo</button>
             </div>
-
-
+            
         </form>
     </section>
 
+   
     <script>
 
         // Nút đóng popup
-        document.getElementById('backBtn').addEventListener('click', function () {
+        document.getElementById('backBtn').addEventListener('click', function() {
             //chuyen ve trang home
             window.location.href = "baocao";
         });
 
         document.getElementById("savingForm").addEventListener('submit', (event) => {
             event.preventDefault();
-            var daySelected = document.getElementById("month").value
+            var daySelected = document.getElementById("chooseDate").value
             console.log(daySelected)
-            var savingType = document.getElementById("loaiTietKiem").value
 
-            fetch('/baocaothang', {
+            fetch('/baocaongay', {
                 method: 'post',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    type: Number(savingType),
                     date: daySelected
                 })
             })
@@ -157,23 +135,23 @@
                 })
                 .then(data => {
                     console.log(data);
-                    showReport(data);
+                    showReport(data); 
                 })
                 .catch((err) => console.log(err))
 
         })
 
         function showReport(data) {
-            const table = document.getElementById('monthlyTable');
+            const table = document.getElementById('dailyTable');
             document.getElementById("notfind").innerHTML = ''
             table.innerHTML = ''
             if (data.length > 0) {
                 table.innerHTML = `
                     <tr>
                         <th>STT</th>
-                        <th>NGÀY</th>
-                        <th>SỔ MỞ</th>
-                        <th>SỔ ĐÓNG</th>
+                        <th>LOẠI TIẾT KIỆM</th>
+                        <th>TỔNG THU</th>
+                        <th>TỔNG CHI</th>
                         <th>CHÊNH LỆCH</th>
                     </tr>
                 `;
@@ -182,9 +160,9 @@
                     const row = document.createElement('tr');
                     row.innerHTML = `
                         <td>${i}</td>
-                        <td>${item.date}</td>
-                        <td>${item.SoMo}</td>
-                        <td>${item.SoDong}</td>
+                        <td>${item.typename}</td>
+                        <td>${item.thu}</td>
+                        <td>${item.chi}</td>
                         <td>${item.ChenhLech}</td>
                     `;
                     table.appendChild(row);
@@ -195,7 +173,8 @@
                 document.getElementById("notfind").innerHTML = 'Không tìm thấy sổ nào.';
             }
         }
+
+       
     </script>
 </body>
-
 </html>

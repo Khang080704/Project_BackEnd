@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mở Sổ Tiết Kiệm</title>
-    <link rel="stylesheet" href="/css/css_moso.css">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Mở Sổ</title>
+    <link rel="stylesheet" href="./css/css_moso.css">
     <style>
         /* Popup  */
         .popup {
@@ -28,6 +27,7 @@
         .popup.show {
             display: block;
         }
+
 
         .overlay {
             display: none;
@@ -62,12 +62,13 @@
     </header>
     <section class="saving-account-form">
         <h2>MỞ SỔ TIẾT KIỆM</h2>
-        <form id="savingForm" method="post" action="/moso">
+        <form id="savingForm">
             <div class="row">
                 <label for="id">Mã sổ:</label>
-                <input type="text" id="id" name="id" required>
+                <input type="number" id="id" name="id" required>
                 <label for="savingType">Loại tiết kiệm:</label>
                 <!-- chon thay vi nhap -->
+
                 <select id="loaiTietKiem" name="savingType" onchange="getType()">
                     <% for (var i=0; i < listOfTypes.length ; i++) { %>
                         <option value="<%= listOfTypes[i].id %>">
@@ -104,10 +105,27 @@
             </div>
         </form>
     </section>
+    <!-- Popup thông báo thành công -->
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
-        <p>Mở sổ tiết kiệm thành công!</p>
+        <p>Lưu thay đổi thành công!</p>
         <button id="closePopup">OK</button>
+    </div>
+
+    <!-- Popup xác nhận hủy -->
+    <div class="overlay" id="cancelOverlay"></div>
+    <div class="popup" id="cancelPopup">
+        <p>Bạn có chắc chắn muốn hủy không?</p>
+        <div class="button-row">
+            <button id="closeCancelPopup">Không</button>
+            <button id="confirmCancel">Hủy</button>
+        </div>
+    </div>
+
+
+    <div class="popup" id="Error">
+        <p>Mã sổ đã tồn tại</p>
+        <button type="button" id="close">OK</button>
     </div>
 
 </body>
@@ -217,7 +235,14 @@
                 })
                 .then(data => {
                     if (data.status == false) {
-                        alert(data.message)
+                        document.getElementById('Error').classList.add('show');
+                        document.getElementById('overlay').classList.add('show');
+
+                        document.getElementById('close').addEventListener('click', () => {
+                            document.getElementById('Error').classList.remove('show');
+                            document.getElementById('overlay').classList.remove('show');
+                        })
+                        //alert(data.message)
                     }
                     else {
                         document.getElementById('popup').classList.add('show');
@@ -232,18 +257,28 @@
     });
 
 
-    // Nút đóng popup
+    // Đóng popup thành công
     document.getElementById('closePopup').addEventListener('click', function () {
-        // Chuyển hướng về trang homepage
         window.location.href = "HomePage";
     });
 
-
+    // Xử lý sự kiện hủy
     document.getElementById('cancelBtn').addEventListener('click', function () {
-        if (confirm('Bạn có chắc chắn muốn hủy không?')) {
-            window.location.href = "HomePage"; // Chuyển về trang homepage /
-        }
+        document.getElementById('cancelPopup').classList.add('show');
+        document.getElementById('cancelOverlay').classList.add('show');
     });
+
+    // Xác nhận hủy
+    document.getElementById('confirmCancel').addEventListener('click', function () {
+        window.location.href = "HomePage"; // Điều hướng về trang khác
+    });
+
+    // Đóng popup hủy
+    document.getElementById('closeCancelPopup').addEventListener('click', function () {
+        document.getElementById('cancelPopup').classList.remove('show');
+        document.getElementById('cancelOverlay').classList.remove('show');
+    });
+
 </script>
 
 </html>

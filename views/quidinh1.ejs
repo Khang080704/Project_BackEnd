@@ -162,7 +162,7 @@
                 row.innerHTML = `
             <td>${account.typename}</td>
             <td>${account.term} tháng</td>
-            <td>${account.interest_rate * 100}%</td>
+            <td>${(account.interest_rate * 100).toFixed(2)}%</td>
             <td>${Number(account.min_deposit_money).toLocaleString()} đ</td>
             <td><button class="delete-btn" data-index="${account.id}">Xóa</button>
                 <button class="edit-btn" data-index="${account.id}">Chỉnh sửa</button>

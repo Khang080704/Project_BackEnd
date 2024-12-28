@@ -32,33 +32,41 @@ document.getElementById('savingForm').addEventListener('submit', function (event
     let formData = new FormData(form);
     let queryString = new URLSearchParams(formData).toString()
     let formDataObject = {};
-    formData.forEach((value, key) => { 
+    formData.forEach((value, key) => {
         formDataObject[key] = value
     });
     console.log(formDataObject);
 
-    fetch('/guitien',{ 
-        method : 'post',
-        headers : {
-            'Content-Type': 'application/json' 
+    fetch('/guitien', {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
         },
-        body : JSON.stringify( formDataObject)
+        body: JSON.stringify(formDataObject)
     })
-    .then((respone) => {
-        return respone.json()
-    })
-    .then(data => {
-        if(data.status == false){
-            alert(data.message)
-        }
-        else{
-            document.getElementById('popup').classList.add('show');
-            document.getElementById('overlay').classList.add('show');
-        }
-    })    
-    .catch(error => {
-        console.log(error)
-    })
+        .then((respone) => {
+            return respone.json()
+        })
+        .then(data => {
+            if (data.status == false) {
+                //alert(data.message)
+                document.getElementById('message').innerHTML = data.message
+                document.getElementById('Error').classList.add('show');
+                document.getElementById('overlay').classList.add('show');
+
+                document.getElementById('close').addEventListener('click', () => {
+                    document.getElementById('Error').classList.remove('show');
+                    document.getElementById('overlay').classList.remove('show');
+                })
+            }
+            else {
+                document.getElementById('popup').classList.add('show');
+                document.getElementById('overlay').classList.add('show');
+            }
+        })
+        .catch(error => {
+            console.log(error)
+        })
 });
 
 // Đóng popup thành công

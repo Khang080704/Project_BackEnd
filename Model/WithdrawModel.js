@@ -77,7 +77,7 @@ function WithDrawMoney(req, res) {
 
                 res.send({
                     status : true,
-                    message: `Rút tiền thành công! Số tiền bạn nhận được là ${money}`
+                    message: `Rút tiền thành công! Số tiền bạn nhận được là ${formatNumberWithDots(money)}`
                 })
             } catch (error) {
                 console.log(error)
@@ -260,6 +260,17 @@ const isWithdrawlOneMonthAfterOpen = (withdrawlDate, openDate) => {
     return false;
     
 };
+
+function formatNumberWithDots(number) {
+    // Chuyển số thành chuỗi
+    const a = number
+    const numberString = a.toString();
+
+    // Sử dụng biểu thức chính quy để thêm dấu chấm
+    const formattedNumber = numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    return formattedNumber;
+}
 
 module.exports = {
     WithDrawMoney

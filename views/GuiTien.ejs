@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gửi tiền</title>
     <link rel="stylesheet" href="./css/guitien.css">
     <style>
-         /* tạo Popup */
-         .popup {
+        /* tạo Popup */
+        .popup {
             display: none;
             position: fixed;
             z-index: 1000;
@@ -54,6 +55,7 @@
         }
     </style>
 </head>
+
 <body>
     <header class="top-bar">
         <h1>Quản lý Sổ Tiết Kiệm</h1>
@@ -67,11 +69,11 @@
                 <input type="number" id="id" name="id" required>
                 <label for="customer">Khách hàng:</label>
                 <input type="text" id="customer" name="customer" required>
-    
+
             </div>
-            
-            
-            
+
+
+
             <div class="row">
 
                 <label for="openDate">Ngày gửi:</label>
@@ -87,29 +89,35 @@
                 <button type="submit">Lập phiếu</button>
                 <button type="button" id="cancelBtn">Hủy</button>
             </div>
-            
+
         </form>
     </section>
 
-   <!-- Popup thông báo thành công -->
-   <div class="overlay" id="overlay"></div>
-   <div class="popup" id="popup">
-       <p>Lưu thay đổi thành công!</p>
-       <button id="closePopup">OK</button>
-   </div>
+    <!-- Popup thông báo thành công -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <p>Lưu thay đổi thành công!</p>
+        <button id="closePopup">OK</button>
+    </div>
 
-   <!-- Popup xác nhận hủy -->
-   <div class="overlay" id="cancelOverlay"></div>
-   <div class="popup" id="cancelPopup">
-       <p>Bạn có chắc chắn muốn hủy không?</p>
-       <div class="button-row">
-           <button id="closeCancelPopup">Không</button>
-           <button id="confirmCancel">Hủy</button>
-       </div>
-   </div>
+    <!-- Popup xác nhận hủy -->
+    <div class="overlay" id="cancelOverlay"></div>
+    <div class="popup" id="cancelPopup">
+        <p>Bạn có chắc chắn muốn hủy không?</p>
+        <div class="button-row">
+            <button id="closeCancelPopup">Không</button>
+            <button id="confirmCancel">Hủy</button>
+        </div>
+    </div>
 
-   <script src="js/GuiTien.js">
-       
-   </script>
+    <div class="popup" id="Error">
+        <p id="message"></p>
+        <button id="close">OK</button>
+    </div>
+
+    <script src="js/GuiTien.js">
+
+    </script>
 </body>
+
 </html>
